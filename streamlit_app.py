@@ -78,13 +78,13 @@ if st.button("Assess Risk", use_container_width=True):
         with res_col1:
             if level == "High":
                 with st.error():
-                    st.metric("Risk Level", level, label_visibility="collapsed")
+                    st.metric("Risk Level", level) # REMOVED label_visibility
             elif level == "Moderate":
                 with st.warning():
-                    st.metric("Risk Level", level, label_visibility="collapsed")
+                    st.metric("Risk Level", level) # REMOVED label_visibility
             else: # Low
                 with st.success():
-                    st.metric("Risk Level", level, label_visibility="collapsed")
+                    st.metric("Risk Level", level) # REMOVED label_visibility
 
         # Column 2: The evidence and details
         with res_col2:
