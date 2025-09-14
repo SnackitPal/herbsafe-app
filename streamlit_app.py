@@ -76,11 +76,15 @@ if st.button("Assess Risk", use_container_width=True):
 
         # Column 1: The colored metric box
         with res_col1:
-            if level == "High": container = st.error
-            elif level == "Moderate": container = st.warning
-            else: container = st.success
-            with container:
-                st.metric("Risk Level", level)
+            if level == "High":
+                with st.error():
+                    st.metric("Risk Level", level, label_visibility="collapsed")
+            elif level == "Moderate":
+                with st.warning():
+                    st.metric("Risk Level", level, label_visibility="collapsed")
+            else: # Low
+                with st.success():
+                    st.metric("Risk Level", level, label_visibility="collapsed")
 
         # Column 2: The evidence and details
         with res_col2:
@@ -100,7 +104,7 @@ if st.button("Assess Risk", use_container_width=True):
             st.subheader("Personalized Cautions")
             for factor in risk_factors:
                 st.write(f"- {factor}")
-
+        
         # F. Add Actionable Advice
         st.subheader("General Precautions & Alternatives")
         if level == "High":
@@ -118,7 +122,7 @@ if st.button("Assess Risk", use_container_width=True):
             if primary_ingredient:
                 with st.spinner(f"Searching PubMed for live evidence on {primary_ingredient}..."):
                     pubmed_result = fetch_pubmed_summary(primary_ingredient)
-
+                
                 if pubmed_result:
                     with st.expander("Live Evidence from PubMed"):
                         st.markdown(f"#### [{pubmed_result['title']}]({pubmed_result['url']})")
