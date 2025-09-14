@@ -74,17 +74,14 @@ if st.button("Assess Risk", use_container_width=True):
         st.subheader("Risk Assessment Results")
         res_col1, res_col2 = st.columns([1, 2]) # Ratio of column sizes
 
-        # Column 1: The colored metric box
+        # Column 1: The colored metric box (Corrected and Simplified)
         with res_col1:
             if level == "High":
-                with st.error():
-                    st.metric("Risk Level", level) # REMOVED label_visibility
+                st.error(f"**Risk Level: {level}**")
             elif level == "Moderate":
-                with st.warning():
-                    st.metric("Risk Level", level) # REMOVED label_visibility
+                st.warning(f"**Risk Level: {level}**")
             else: # Low
-                with st.success():
-                    st.metric("Risk Level", level) # REMOVED label_visibility
+                st.success(f"**Risk Level: {level}**")
 
         # Column 2: The evidence and details
         with res_col2:
