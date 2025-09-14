@@ -3,7 +3,7 @@
     "ingredients": ["Tinospora cordifolia"],
     "risk_label": "High",
     "evidence": "Multiple case series in India have linked T. cordifolia (giloy) to herb-induced liver injury (HILI), particularly during the COVID-19 period.",
-    "evidence_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9015912/"
+    "evidence_link": "https://pubmed.ncbi.nlm.nih.gov/34230786/"
   },
   "Himalaya Turmeric 95": {
     "ingredients": ["Curcuma longa (curcumin)"],
