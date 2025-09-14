@@ -52,7 +52,6 @@ def perform_assessment():
         }
     else:
         st.warning("Please select a product from the dropdown menu.")
-        # Clear previous results if any
         st.session_state.results = None
 
 # --- Input Sidebar ---
@@ -69,7 +68,6 @@ with st.sidebar:
 # --- Main Panel ---
 st.subheader("For a Quick Demo")
 col1, col2 = st.columns(2)
-# Demo buttons now just provide guidance
 with col1:
     if st.button("Test High-Risk Case (Giloy)"):
         st.info("Demo: Please select 'Zandu Giloy Tablets' from the sidebar and click 'Assess Risk'.")
@@ -79,11 +77,9 @@ with col2:
 
 st.divider()
 
-# Assessment Button now uses a callback function
 st.button("Assess Risk", on_click=perform_assessment, use_container_width=True)
 
 # --- Results Display Section ---
-# This part now checks session_state, not the button click
 if st.session_state.results:
     results = st.session_state.results
     level = results['level']
@@ -118,27 +114,38 @@ if st.session_state.results:
         for factor in risk_factors:
             st.write(f"- {factor}")
     
-    # *** THIS SECTION HAS BEEN FIXED ***
     st.subheader("General Precautions & Alternatives")
     if level == "High":
-        st.error("⚠️ **Action Recommended:** Consider stopping this product and consulting a physician. Monitor for any symptoms of liver injury (e.g., jaundice, dark urine, abdominal pain). Avoid concurrent use of alcohol or other potentially liver-toxic substances.")
+        st.error("⚠️ **Action Recommended:** Consider stopping this product and consulting a physician...")
     elif level == "Moderate":
-        st.warning("🟡 **Caution Advised:** Use this product with care, preferably under the guidance of a healthcare professional. Be aware of the potential risks and consider periodic liver function tests (LFTs) if using for an extended period.")
-    else: # Low
-        st.success("✅ **Generally Safe:** This product is considered safe for most people at standard doses. However, always discontinue use if you experience any adverse effects.")
+        st.warning("🟡 **Caution Advised:** Use this product with care...")
+    else:
+        st.success("✅ **Generally Safe:** This product is considered safe...")
 
     st.divider()
 
+    # --- THIS SECTION HAS BEEN UPDATED ---
     if level in ["High", "Moderate"]:
-        primary_ingredient = product_info.get("ingredients", [])[0]
+        primary_ingredient = product_info.get("ingredients", [None])[0]
         if primary_ingredient:
+            # Try searching with scientific name, then common name as fallback
             with st.spinner(f"Searching PubMed for live evidence on {primary_ingredient}..."):
                 pubmed_result = fetch_pubmed_summary(primary_ingredient)
+                if not pubmed_result and primary_ingredient == "Tinospora cordifolia":
+                    pubmed_result = fetch_pubmed_summary("Giloy") # Fallback search
             
-            if pubmed_result:
-                with st.expander("Live Evidence from PubMed"):
+            # Display live search results
+            with st.expander("Live Evidence from PubMed", expanded=False):
+                if pubmed_result:
                     st.markdown(f"#### [{pubmed_result['title']}]({pubmed_result['url']})")
                     st.write(pubmed_result['snippet'])
                     st.caption(f"Full article available at: {pubmed_result['url']}")
-            else:
-                st.info(f"No specific liver risk studies found on PubMed for '{primary_ingredient}'. This does not guarantee safety.")
+                else:
+                    st.info(f"No specific live studies found on PubMed for '{primary_ingredient}'. This does not guarantee safety.")
+
+            # Display curated supplementary links if they exist
+            supplementary_links = product_info.get("supplementary_links")
+            if supplementary_links:
+                st.subheader("Additional Curated Research")
+                for link in supplementary_links:
+                    st.markdown(f"- [{link['title']}]({link['url']})")
