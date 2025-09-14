@@ -1,0 +1,32 @@
+{
+  "Zandu Giloy Tablets": {
+    "ingredients": ["Tinospora cordifolia"],
+    "risk_label": "High",
+    "evidence": "Multiple case series in India have linked T. cordifolia (giloy) to herb-induced liver injury (HILI), particularly during the COVID-19 period.",
+    "evidence_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9015912/"
+  },
+  "Himalaya Turmeric 95": {
+    "ingredients": ["Curcuma longa (curcumin)"],
+    "risk_label": "Low",
+    "evidence": "Generally considered safe, but rare case reports of liver injury exist, especially with high-bioavailability formulations. The TGA (Australia) issued a safety advisory.",
+    "evidence_link": "https://www.tga.gov.au/news/safety-alerts/medicines-and-herbal-supplements-containing-turmeric"
+  },
+  "Herbal Stress Relief": {
+    "ingredients": ["Kava (Piper methysticum)"],
+    "risk_label": "High",
+    "evidence": "Well-documented link to severe hepatotoxicity, leading to regulatory warnings or bans in several countries.",
+    "evidence_link": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5869033/"
+  },
+  "Focus Boost": {
+    "ingredients": ["Ginkgo Biloba"],
+    "risk_label": "Moderate",
+    "evidence": "Considered largely safe, but isolated case reports of mild liver injury have been published. Caution is advised.",
+    "evidence_link": "https://www.ncbi.nlm.nih.gov/books/NBK548421/"
+  },
+  "Ginger Soothe Capsules": {
+    "ingredients": ["Zingiber officinale (Ginger)"],
+    "risk_label": "Low",
+    "evidence": "Widely recognized as safe (GRAS) with no significant evidence of hepatotoxicity in standard doses.",
+    "evidence_link": "https://www.nccih.nih.gov/health/ginger"
+  }
+}
