@@ -19,7 +19,21 @@
     "ingredients": ["Curcuma longa (curcumin)"],
     "risk_label": "Low",
     "evidence": "Generally considered safe, but rare case reports of liver injury exist, especially with high-bioavailability formulations. The TGA (Australia) issued a safety advisory.",
-    "evidence_link": "https://www.tga.gov.au/news/safety-alerts/medicines-and-herbal-supplements-containing-turmeric"
+    "evidence_link": "https://www.tga.gov.au/safety/safety-alerts/medicines-containing-turmeric-or-curcumin-risk-liver-injury",
+    "supplementary_links": [
+      {
+        "title": "Case report of curcumin-induced liver injury (PubMed)",
+        "url": "https://pubmed.ncbi.nlm.nih.gov/32656820/"
+      },
+      {
+        "title": "Review on curcumin hepatotoxicity (PMC)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9892270/"
+      },
+      {
+        "title": "Official TGA Safety Alert on Turmeric/Curcumin",
+        "url": "https://www.tga.gov.au/safety/safety-alerts/medicines-containing-turmeric-or-curcumin-risk-liver-injury"
+      }
+    ]
   },
   "Herbal Stress Relief": {
     "ingredients": ["Kava (Piper methysticum)"],
