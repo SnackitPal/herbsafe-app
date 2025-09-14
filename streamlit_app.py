@@ -26,6 +26,9 @@ if PRODUCT_DATA is None:
 
 PRODUCT_NAMES = ["--- Select a Product ---"] + list(PRODUCT_DATA.keys())
 
+# Initialize session state for results if it doesn't exist
+if 'results' not in st.session_state:
+    st.session_state.results = None
 
 # --- Function to perform assessment and save to state ---
 def perform_assessment():
@@ -50,8 +53,7 @@ def perform_assessment():
     else:
         st.warning("Please select a product from the dropdown menu.")
         # Clear previous results if any
-        if 'results' in st.session_state:
-            del st.session_state.results
+        st.session_state.results = None
 
 # --- Input Sidebar ---
 with st.sidebar:
@@ -82,7 +84,7 @@ st.button("Assess Risk", on_click=perform_assessment, use_container_width=True)
 
 # --- Results Display Section ---
 # This part now checks session_state, not the button click
-if 'results' in st.session_state:
+if st.session_state.results:
     results = st.session_state.results
     level = results['level']
     product_info = results['product_info']
@@ -116,24 +118,27 @@ if 'results' in st.session_state:
         for factor in risk_factors:
             st.write(f"- {factor}")
     
+    # *** THIS SECTION HAS BEEN FIXED ***
     st.subheader("General Precautions & Alternatives")
     if level == "High":
-        st.error("⚠️ ...") # Abridged for clarity
+        st.error("⚠️ **Action Recommended:** Consider stopping this product and consulting a physician. Monitor for any symptoms of liver injury (e.g., jaundice, dark urine, abdominal pain). Avoid concurrent use of alcohol or other potentially liver-toxic substances.")
     elif level == "Moderate":
-        st.warning("🟡 ...")
-    else:
-        st.success("✅ ...")
+        st.warning("🟡 **Caution Advised:** Use this product with care, preferably under the guidance of a healthcare professional. Be aware of the potential risks and consider periodic liver function tests (LFTs) if using for an extended period.")
+    else: # Low
+        st.success("✅ **Generally Safe:** This product is considered safe for most people at standard doses. However, always discontinue use if you experience any adverse effects.")
 
     st.divider()
 
     if level in ["High", "Moderate"]:
         primary_ingredient = product_info.get("ingredients", [])[0]
         if primary_ingredient:
-            with st.spinner(f"Searching PubMed..."):
+            with st.spinner(f"Searching PubMed for live evidence on {primary_ingredient}..."):
                 pubmed_result = fetch_pubmed_summary(primary_ingredient)
+            
             if pubmed_result:
                 with st.expander("Live Evidence from PubMed"):
                     st.markdown(f"#### [{pubmed_result['title']}]({pubmed_result['url']})")
                     st.write(pubmed_result['snippet'])
+                    st.caption(f"Full article available at: {pubmed_result['url']}")
             else:
-                st.info(f"No specific liver risk studies found on PubMed...")
+                st.info(f"No specific liver risk studies found on PubMed for '{primary_ingredient}'. This does not guarantee safety.")
